@@ -31,13 +31,6 @@ namespace MyBlog.Data.Repos
             return await context.Categories.Where(c => c.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task DeleteCategoryAsync(Category item)
-        {
-            using var context = factory.CreateDbContext();
-            context.Remove(item);
-            await context.SaveChangesAsync();
-        }
-
         public async Task<Category> SaveCategoryAsync(Category category)
         {
             using var context = factory.CreateDbContext();
@@ -51,6 +44,13 @@ namespace MyBlog.Data.Repos
             }
             await context.SaveChangesAsync();
             return category;
+        }
+
+        public async Task DeleteCategoryAsync(Category item)
+        {
+            using var context = factory.CreateDbContext();
+            context.Remove(item);
+            await context.SaveChangesAsync();
         }
     }
 }
