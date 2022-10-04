@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyBlog.Data.Interfaces;
 using MyBlog.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBlog.Data.Repos
 {
@@ -57,46 +52,6 @@ namespace MyBlog.Data.Repos
             }
             await context.SaveChangesAsync();
             return post;
-        }
-
-
-
-        
-
-
-        //Tags CRUD
-        public Task<Tag?> GetTagAsync(int id)
-        {
-            using var context = factory.CreateDbContext();
-            return context.Tags.Where(t => t.Id == id).FirstOrDefaultAsync();
-        }
-
-        public Task<List<Tag>> GetTagsAsync()
-        {
-            using var context = factory.CreateDbContext();
-            return context.Tags.ToListAsync();
-        }
-
-        public async Task DeleteTagAsync(Tag item)
-        {
-            using var context = factory.CreateDbContext();
-            context.Remove(item);
-            await context.SaveChangesAsync();
-        }
-
-        public async Task<Tag> SaveTagAsync(Tag tag)
-        {
-            using var context = factory.CreateDbContext();
-            if (tag.Id == 0) //Add new item
-            {
-                context.Tags.Add(tag);
-            }
-            else //Update old item
-            {
-                context.Entry(tag).State = EntityState.Modified;
-            }
-            await context.SaveChangesAsync();
-            return tag;
         }
     }
 }
