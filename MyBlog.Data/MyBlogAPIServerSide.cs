@@ -11,68 +11,81 @@ namespace MyBlog.Data
 {
     public class MyBlogAPIServerSide : IMyBlogApi
     {
-        IDbContextFactory<MyBlogDbContext> factory;
+        private IDbContextFactory<MyBlogDbContext> factory;
 
         public MyBlogAPIServerSide(IDbContextFactory<MyBlogDbContext> factory)
         {
             this.factory = factory; 
         }
 
-        public Task DeleteBlogPostAsync(BlogPost item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteCategoryAsync(Category item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteTagAsync(Tag item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<BlogPost> GetBlogPostAsync(int id)
+        //BlogPost CRUD
+        public async Task<BlogPost?> GetBlogPostAsync(int id)
         {
             using var context = factory.CreateDbContext();
-
-            //cmd_str = "SELECT * FROM tblBlogPosts WHERE Id = @Id;"
-            //cmd = new Sqlcommand(conn, cmd_str);
-            //cmd.parameters.addwithvalue("Id",id)
-
-            return await context.BlogPosts.Include(p=>p.Category).Include(p=>p.Tags).FirstOrDefaultAsync(p => p.Id == id); //<- LINQ
+            return await context.BlogPosts.Include(p => p.Category).Include(p => p.Tags).Where(p => p.Id == id).FirstOrDefaultAsync(); //<- LINQ
         }
 
-        public Task<int> GetBlogPostCountAsync()
+        public async Task<int> GetBlogPostCountAsync()
         {
-            throw new NotImplementedException();
+            using var context = factory.CreateDbContext();
+            return await context.BlogPosts.CountAsync();
         }
 
-        public Task<List<BlogPost>> GetBlogPostsAsync(int numberofposts, int startindex)
+        public async Task<List<BlogPost>> GetBlogPostsAsync(int numberofposts, int startindex)
         {
-            throw new NotImplementedException();
+            using var context = factory.CreateDbContext();
+            return await context.BlogPosts.OrderByDescending(p=>p.PublishDate).Skip(startindex).Take(numberofposts).ToListAsync();  
         }
 
-        public Task<List<Category>> GetCategoriesAsync()
+        public async Task DeleteBlogPostAsync(BlogPost item)
         {
-            throw new NotImplementedException();
+            using var context = factory.CreateDbContext();
+            context.BlogPosts.Remove(item);
+            await context.SaveChangesAsync();
         }
 
-        public Task<Category> GetCategoryAsync(int id)
+        //Categories CRUD
+        public async Task<List<Category>> GetCategoriesAsync()
         {
-            throw new NotImplementedException();
+            using var context = factory.CreateDbContext();
+            return await context.Categories.ToListAsync();
         }
 
-        public Task<Tag> GetTagAsync(int id)
+        public async Task<Category?> GetCategoryAsync(int id)
         {
-            throw new NotImplementedException();
+            using var context = factory.CreateDbContext();
+            return await context.Categories.Where(c => c.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task DeleteCategoryAsync(Category item)
+        {
+            using var context = factory.CreateDbContext();
+            context.Remove(item);
+            await context.SaveChangesAsync();
+        }
+
+        //Tags CRUD
+        public Task<Tag?> GetTagAsync(int id)
+        {
+            using var context = factory.CreateDbContext();
+            return context.Tags.Where(t => t.Id == id).FirstOrDefaultAsync();
         }
 
         public Task<List<Tag>> GetTagsAsync()
         {
-            throw new NotImplementedException();
+            using var context = factory.CreateDbContext();
+                return context.Tags.ToListAsync();
         }
+
+        public async Task DeleteTagAsync(Tag item)
+        {
+            using var context = factory.CreateDbContext();
+            context.Remove(item);
+            await context.SaveChangesAsync();
+        }
+        //-------------------------
+
+
 
         public Task<BlogPost> SaveBlogPostAsync(BlogPost item)
         {

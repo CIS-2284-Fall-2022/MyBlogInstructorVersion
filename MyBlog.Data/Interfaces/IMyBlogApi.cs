@@ -9,39 +9,34 @@ namespace MyBlog.Data.Interfaces
 {
     public interface IMyBlogApi
     {
+        //Blog Post CRUD
+        Task<BlogPost?> GetBlogPostAsync(int id);
+
+        Task<int> GetBlogPostCountAsync(); 
         
-        //Retrieve
-        Task<int> GetBlogPostCountAsync();               
-
         Task<List<BlogPost>> GetBlogPostsAsync(int numberofposts, int startindex);
-
-        Task<List<Category>> GetCategoriesAsync();
-
-        Task<List<Tag>> GetTagsAsync();
-
-        Task<BlogPost> GetBlogPostAsync(int id);
-
-        Task<Category> GetCategoryAsync(int id);
-
-        Task<Tag> GetTagAsync(int id);
-
-        //Create
-
+      
         Task<BlogPost> SaveBlogPostAsync(BlogPost item);
-
-        Task<Category> SaveCategoryAsync(Category item);
-
-        Task<Tag> SaveTagAsync(Tag item);
-
-        //Delete
 
         Task DeleteBlogPostAsync(BlogPost item);
 
+        //Category CRUD
+        Task<Category?> GetCategoryAsync(int id);        
+
+        Task<List<Category>> GetCategoriesAsync();
+
+        Task<Category> SaveCategoryAsync(Category item);
+
         Task DeleteCategoryAsync(Category item);
 
-        Task DeleteTagAsync(Tag item);
+        //Tag CRUD
+        Task<Tag?> GetTagAsync(int id);
+        Task<List<Tag>> GetTagsAsync();        
 
-        //No update!!
+
+        Task<Tag> SaveTagAsync(Tag item);
+  
+        Task DeleteTagAsync(Tag item);
 
     }
 }
