@@ -44,6 +44,23 @@ namespace MyBlog.Data
             await context.SaveChangesAsync();
         }
 
+        public async Task<BlogPost> SaveBlogPostAsync(BlogPost post)
+        {
+            using var context = factory.CreateDbContext();
+            if (post.Id == 0) //Add new item
+            {
+                context.BlogPosts.Add(post);
+            }
+            else //Update old item
+            {
+                context.Entry(post).State = EntityState.Modified;
+            }
+            await context.SaveChangesAsync();
+            return post;
+        }
+
+
+
         //Categories CRUD
         public async Task<List<Category>> GetCategoriesAsync()
         {
@@ -64,6 +81,22 @@ namespace MyBlog.Data
             await context.SaveChangesAsync();
         }
 
+        public async Task<Category> SaveCategoryAsync(Category category)
+        {
+            using var context = factory.CreateDbContext();
+            if (category.Id == 0) //Add new item
+            {
+                context.Categories.Add(category);
+            }
+            else //Update old item
+            {
+                context.Entry(category).State = EntityState.Modified;
+            }
+            await context.SaveChangesAsync();
+            return category;
+        }
+
+
         //Tags CRUD
         public Task<Tag?> GetTagAsync(int id)
         {
@@ -83,23 +116,20 @@ namespace MyBlog.Data
             context.Remove(item);
             await context.SaveChangesAsync();
         }
-        //-------------------------
 
-
-
-        public Task<BlogPost> SaveBlogPostAsync(BlogPost item)
+        public async Task<Tag> SaveTagAsync(Tag tag)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Category> SaveCategoryAsync(Category item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Tag> SaveTagAsync(Tag item)
-        {
-            throw new NotImplementedException();
+            using var context = factory.CreateDbContext();
+            if(tag.Id == 0) //Add new item
+            {
+                context.Tags.Add(tag);
+            }
+            else //Update old item
+            {
+                context.Entry(tag).State= EntityState.Modified;
+            }
+            await context.SaveChangesAsync();
+            return tag;
         }
     }
 }
