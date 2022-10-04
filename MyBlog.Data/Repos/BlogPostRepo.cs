@@ -7,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyBlog.Data
+namespace MyBlog.Data.Repos
 {
-    public class MyBlogAPIServerSide : IMyBlogApi
+    public class BlogPostRepo : IBlogPostRepo
     {
         private IDbContextFactory<MyBlogDbContext> factory;
 
-        public MyBlogAPIServerSide(IDbContextFactory<MyBlogDbContext> factory)
+        public BlogPostRepo(IDbContextFactory<MyBlogDbContext> factory)
         {
-            this.factory = factory; 
+            this.factory = factory;
         }
 
         //BlogPost CRUD
@@ -34,7 +34,7 @@ namespace MyBlog.Data
         public async Task<List<BlogPost>> GetBlogPostsAsync(int numberofposts, int startindex)
         {
             using var context = factory.CreateDbContext();
-            return await context.BlogPosts.OrderByDescending(p=>p.PublishDate).Skip(startindex).Take(numberofposts).ToListAsync();  
+            return await context.BlogPosts.OrderByDescending(p => p.PublishDate).Skip(startindex).Take(numberofposts).ToListAsync();
         }
 
         public async Task DeleteBlogPostAsync(BlogPost item)
@@ -61,40 +61,7 @@ namespace MyBlog.Data
 
 
 
-        //Categories CRUD
-        public async Task<List<Category>> GetCategoriesAsync()
-        {
-            using var context = factory.CreateDbContext();
-            return await context.Categories.ToListAsync();
-        }
-
-        public async Task<Category?> GetCategoryAsync(int id)
-        {
-            using var context = factory.CreateDbContext();
-            return await context.Categories.Where(c => c.Id == id).FirstOrDefaultAsync();
-        }
-
-        public async Task DeleteCategoryAsync(Category item)
-        {
-            using var context = factory.CreateDbContext();
-            context.Remove(item);
-            await context.SaveChangesAsync();
-        }
-
-        public async Task<Category> SaveCategoryAsync(Category category)
-        {
-            using var context = factory.CreateDbContext();
-            if (category.Id == 0) //Add new item
-            {
-                context.Categories.Add(category);
-            }
-            else //Update old item
-            {
-                context.Entry(category).State = EntityState.Modified;
-            }
-            await context.SaveChangesAsync();
-            return category;
-        }
+        
 
 
         //Tags CRUD
@@ -107,7 +74,7 @@ namespace MyBlog.Data
         public Task<List<Tag>> GetTagsAsync()
         {
             using var context = factory.CreateDbContext();
-                return context.Tags.ToListAsync();
+            return context.Tags.ToListAsync();
         }
 
         public async Task DeleteTagAsync(Tag item)
@@ -120,13 +87,13 @@ namespace MyBlog.Data
         public async Task<Tag> SaveTagAsync(Tag tag)
         {
             using var context = factory.CreateDbContext();
-            if(tag.Id == 0) //Add new item
+            if (tag.Id == 0) //Add new item
             {
                 context.Tags.Add(tag);
             }
             else //Update old item
             {
-                context.Entry(tag).State= EntityState.Modified;
+                context.Entry(tag).State = EntityState.Modified;
             }
             await context.SaveChangesAsync();
             return tag;
