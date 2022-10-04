@@ -25,7 +25,7 @@ namespace MyBlog.Data
         public MyBlogDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<MyBlogDbContext>();
-            optionsBuilder.UseSqlite("Data Source = test.db");
+            optionsBuilder.UseSqlite("Data Source = ../test.db");
             return new MyBlogDbContext(optionsBuilder.Options);
         }
     }
