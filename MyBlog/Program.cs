@@ -10,10 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+
+//Add our database context
 builder.Services.AddDbContextFactory<MyBlogDbContext>(opt => opt.UseSqlite($"DataSource = ../MyBlog.db"));
 
 //Add repos
+builder.Services.AddSingleton<IWeatherForecastService,WeatherForecastServiceMock>();
 builder.Services.AddScoped<IBlogPostRepo, BlogPostRepo>();
 builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
 builder.Services.AddScoped<ITagRepo, TagRepo>();

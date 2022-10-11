@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBlog", "MyBlog\MyBlog.csproj", "{2C8391B1-1B88-4303-8F5F-37C781B54693}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlog", "MyBlog\MyBlog.csproj", "{2C8391B1-1B88-4303-8F5F-37C781B54693}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBlog.Data", "Myblog.Data\MyBlog.Data.csproj", "{C4258B00-F121-497E-93C2-F27FEE20BE04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlog.Data", "Myblog.Data\MyBlog.Data.csproj", "{C4258B00-F121-497E-93C2-F27FEE20BE04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 namespace MyBlog.Data
 {
-    public class WeatherForecastService
+    public class WeatherForecastServiceMock: IWeatherForecastService
     {
         private static readonly string[] Summaries = new[]
         {
