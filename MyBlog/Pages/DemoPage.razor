@@ -1,7 +1,18 @@
-﻿
+﻿@page "/demos"
+
 
 <h3>DemoPage</h3>
+@{
+    @SomeProp
+    <text>Name: <strong>@Name</strong></text>
 
-@code {
+    <p>Implicit Expression: @Number - 1</p>
 
+    <p>Explicit Expression: @(Number - 1)</p>
 }
+@code{
+    public int Number { get; set; } = 77;
+    public string SomeProp { get; set; } = "blah";
+    public string Name { get; set; } = "Steve Jobs";
+}
+
