@@ -9,8 +9,21 @@
     <p>Implicit Expression: @Number - 1</p>
 
     <p>Explicit Expression: @(Number - 1)</p>
+
+    <p>
+        <h1>Hello World</h1>
+    </p>
+    <p>
+        @HTMLIGotFromAUser
+    </p>
+    <p>
+        @((MarkupString)HTMLIGotFromAUser)
+    </p>
+    
+
 }
 @code{
+    public string HTMLIGotFromAUser { get; set; } = "<script>alert('All your base are belong to me!');</script>";
     public int Number { get; set; } = 77;
     public string SomeProp { get; set; } = "blah";
     public string Name { get; set; } = "Steve Jobs";
