@@ -1,6 +1,7 @@
 ﻿@page "/demos"
-
-
+@layout CustomLayout
+@using System.IO
+@inject MyBlog.Data.Interfaces.ICategoryRepo CategoryRepo
 <h3>DemoPage</h3>
 @{
     @SomeProp
@@ -27,5 +28,12 @@
     public int Number { get; set; } = 77;
     public string SomeProp { get; set; } = "blah";
     public string Name { get; set; } = "Steve Jobs";
+
+    public int dosomething()
+    {
+        var myfile = File.Open("C:/Blah.txt",FileMode.Open);
+
+        return 1;
+    }
 }
 
