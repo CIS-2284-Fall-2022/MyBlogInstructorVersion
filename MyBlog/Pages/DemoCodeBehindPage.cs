@@ -1,7 +1,18 @@
-﻿namespace MyBlog.Pages
+﻿using Microsoft.AspNetCore.Components;
+
+namespace MyBlog.Pages
 {
     public partial class DemoCodeBehindPage
     {
-        public string SomeText { get; set; } = "Blah blah blah!";
+        [Parameter]
+        public int Id { get; set; }
+
+        public string SomeText { get; set; } 
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            SomeText = "Blah blah blah!";
+        }
     }
 }
