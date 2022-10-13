@@ -1,0 +1,11 @@
+﻿<h3>MySharedComponent</h3>
+<p style="background-color: lawngreen">
+    <MySharedSharedComponent />
+    @Text
+    blah
+</p>
+
+@code {
+    [CascadingParameter]
+    public string Text { get; set; } = "Original value";
+}

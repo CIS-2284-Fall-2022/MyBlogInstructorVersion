@@ -1,0 +1,14 @@
+﻿@page "/ParentPage/{Text}"
+
+<h3>HasASharedComponentPage</h3>
+<p style="background-color: cornflowerblue">
+<CascadingValue Value="Text">
+    <MySharedComponent/>
+</CascadingValue>
+blah
+</p>
+
+@code {
+    [Parameter]
+    public string Text { get; set; }
+}
