@@ -1,23 +1,30 @@
 ﻿@page "/EditCategory"
+@using MyBlog.Data.Models
+@inject MyBlog.Data.Interfaces.ICategoryRepo Repo
+@inject NavigationManager NavManager
+
 <h3>Edit Category Page</h3>
 
 <p>
-    Name: <input type="text" @bind="Name"/>
+    
+    <label for="nameInput">Name</label>
+    <input type="text" id="nameInput" class="form-control" @bind="Category.Name" />
 </p>
 <p>
-    <button type="button" class="btn btn-primary" @onclick="OnSubmitButtonClick">Submit</button>
+    <button type="button" class="btn btn-primary" @onclick="OnSubmitButtonClickAsync">Submit</button>
 </p>
 <p>
     @Message
 </p>
 @code {
-    public string Name { get; set; }     
+    public Category Category { get; set; } = new Category();   
 
     public string Message { get; set; }
 
 
-    private void OnSubmitButtonClick()
+    private async void OnSubmitButtonClickAsync()
     {
-        Message = $"You entered {Name}.";
+        await Repo.SaveCategoryAsync(Category);
+        NavManager.NavigateTo("/categories");
     }
 }
