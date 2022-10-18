@@ -1,0 +1,23 @@
+﻿@page "/EditCategory"
+<h3>Edit Category Page</h3>
+
+<p>
+    Name: <input type="text" @bind="Name"/>
+</p>
+<p>
+    <button type="button" class="btn btn-primary" @onclick="OnSubmitButtonClick">Submit</button>
+</p>
+<p>
+    @Message
+</p>
+@code {
+    public string Name { get; set; }     
+
+    public string Message { get; set; }
+
+
+    private void OnSubmitButtonClick()
+    {
+        Message = $"You entered {Name}.";
+    }
+}

@@ -1,0 +1,47 @@
+﻿@page "/categories"
+@using MyBlog.Data.Models
+@inject MyBlog.Data.Interfaces.ICategoryRepo Repo
+@inject NavigationManager NavManager
+
+<h3>Category Manager Page</h3>
+
+@if(categories == null || categories.Count == 0)
+{
+    <p>No categories to show yet.</p>
+}
+else
+{
+    <h3>Categories:</h3>
+    <ul>
+        @foreach(var category in categories)
+        {
+            <li>
+                @category.Name
+            </li>
+        }
+    </ul>
+
+    <p>
+        <button type="button" class="btn btn-primary" @onclick="OnAddButtonClick">Add Category</button>
+    </p>
+    <p>
+        @Message
+    </p>
+}
+
+@code {
+    List<Category>? categories{ get; set; }
+    public string Message { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        categories = await Repo.GetCategoriesAsync();
+    }
+
+    private void OnAddButtonClick()
+    {
+        //TODO: Add stuff
+        //Message = $"Clicked at {DateTime.Now.ToString("T")}";
+        NavManager.NavigateTo("/EditCategory");
+    }
+}
