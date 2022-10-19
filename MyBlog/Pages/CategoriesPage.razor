@@ -45,8 +45,11 @@ else
         NavManager.NavigateTo("/EditCategory");
     }
 
-    private void OnDeleteButtonClick(Category category)
+    private async void OnDeleteButtonClick(Category category)
     {
-        Message = $"Deleting {category.Name}";
+        //Remove from database
+        await Repo.DeleteCategoryAsync(category);
+        //Remove from list by completely refreshing the list
+        categories = await Repo.GetCategoriesAsync();
     }
 }
