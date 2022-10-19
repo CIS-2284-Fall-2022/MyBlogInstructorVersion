@@ -16,7 +16,7 @@ else
         @foreach(var category in categories)
         {
             <li>
-                @category.Name <button>Delete</button>
+                @category.Name <button type="button" class="btn btn-primary" @onclick="()=>OnDeleteButtonClick(category)">Delete</button>
             </li>
         }
     </ul>
@@ -43,5 +43,10 @@ else
         //TODO: Add stuff
         //Message = $"Clicked at {DateTime.Now.ToString("T")}";
         NavManager.NavigateTo("/EditCategory");
+    }
+
+    private void OnDeleteButtonClick(Category category)
+    {
+        Message = $"Deleting {category.Name}";
     }
 }
