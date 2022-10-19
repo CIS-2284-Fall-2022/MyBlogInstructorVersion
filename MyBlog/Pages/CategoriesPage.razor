@@ -49,7 +49,7 @@ else
     {
         //Remove from database
         await Repo.DeleteCategoryAsync(category);
-        //Remove from list by completely refreshing the list
-        categories = await Repo.GetCategoriesAsync();
+        //Remove from list by completely deleting from list
+        categories?.Remove(category);
     }
 }
