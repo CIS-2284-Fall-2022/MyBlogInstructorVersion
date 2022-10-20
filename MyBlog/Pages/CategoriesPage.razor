@@ -16,7 +16,9 @@ else
         @foreach(var category in categories)
         {
             <li>
-                @category.Name <button type="button" class="btn btn-primary" @onclick="()=>OnDeleteButtonClick(category)">Delete</button>
+                @category.Name
+                <button type="button" class="btn btn-primary" @onclick="()=>OnEditButtonClick(category)">Edit</button>
+                <button type="button" class="btn btn-primary" @onclick="()=>OnDeleteButtonClick(category)">Delete</button>
             </li>
         }
     </ul>
@@ -51,5 +53,10 @@ else
         await Repo.DeleteCategoryAsync(category);
         //Remove from list by completely deleting from list
         categories?.Remove(category);
+    }
+
+    private async void OnEditButtonClick(Category category)
+    {
+        NavManager.NavigateTo($"/EditCategory/{category.Id}");
     }
 }

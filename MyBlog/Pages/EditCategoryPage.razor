@@ -1,4 +1,4 @@
-﻿@page "/EditCategory"
+﻿@page "/EditCategory/{Id:int}"
 @using MyBlog.Data.Models
 @inject MyBlog.Data.Interfaces.ICategoryRepo Repo
 @inject NavigationManager NavManager
@@ -17,10 +17,18 @@
     @Message
 </p>
 @code {
+    [Parameter]
+    public int Id { get; set; }     
+
     public Category Category { get; set; } = new Category();   
 
     public string Message { get; set; }
 
+    protected async override Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        Category = await Repo.GetCategoryAsync(Id);
+    }
 
     private async void OnSubmitButtonClickAsync()
     {
