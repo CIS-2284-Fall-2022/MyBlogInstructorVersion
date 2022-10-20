@@ -4,35 +4,51 @@
 @inject NavigationManager NavManager
 
 <h3>Edit Category Page</h3>
-
-<p>
+@if(Category == null)
+{
+    <p>Category does not exist.</p>
+}
+else
+{
+    <p>
     
-    <label for="nameInput">Name</label>
-    <input type="text" id="nameInput" class="form-control" @bind="Category.Name" />
-</p>
-<p>
-    <button type="button" class="btn btn-primary" @onclick="OnSubmitButtonClickAsync">Submit</button>
-</p>
-<p>
-    @Message
-</p>
+        <label for="nameInput">Name</label>
+        <input type="text" id="nameInput" class="form-control" @bind="Category.Name" />
+    </p>
+    <p>
+        <button type="button" class="btn btn-primary" @onclick="OnSubmitButtonClickAsync">Submit</button>
+    </p>
+    <p>
+        @Message
+    </p>
+}
 @code {
     [Parameter]
-    public int Id { get; set; }     
+    public int Id { get; set; }   
 
-    public Category Category { get; set; } = new Category();   
+    public Category? Category { get; set; } 
 
-    public string Message { get; set; }
+    public string? Message { get; set; }
 
     protected async override Task OnParametersSetAsync()
-    {
+    {        
         await base.OnParametersSetAsync();
-        Category = await Repo.GetCategoryAsync(Id);
+        if (Id == 0)
+        {
+            Category = new Category();
+        }
+        else
+        {
+            Category = await Repo.GetCategoryAsync(Id);
+        }
     }
 
     private async void OnSubmitButtonClickAsync()
     {
-        await Repo.SaveCategoryAsync(Category);
+        if (Category != null)
+        {
+            await Repo.SaveCategoryAsync(Category);
+        }
         NavManager.NavigateTo("/categories");
     }
 }
