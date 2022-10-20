@@ -1,4 +1,4 @@
-﻿@page "/EditCategory/{Id:int}"
+﻿@page "/EditCategory/{Id:int?}"
 @using MyBlog.Data.Models
 @inject MyBlog.Data.Interfaces.ICategoryRepo Repo
 @inject NavigationManager NavManager
@@ -24,7 +24,7 @@ else
 }
 @code {
     [Parameter]
-    public int Id { get; set; }   
+    public int? Id { get; set; }   
 
     public Category? Category { get; set; } 
 
@@ -33,13 +33,13 @@ else
     protected async override Task OnParametersSetAsync()
     {        
         await base.OnParametersSetAsync();
-        if (Id == 0)
+        if (Id == null)
         {
             Category = new Category();
         }
         else
         {
-            Category = await Repo.GetCategoryAsync(Id);
+            Category = await Repo.GetCategoryAsync((int)Id);
         }
     }
 
