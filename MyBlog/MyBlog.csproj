@@ -7,7 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\ParentCounter.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Myblog.Data\MyBlog.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\ParentCounter.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\ParentCounter.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\ParentCounter.razor" />
   </ItemGroup>
 
 </Project>

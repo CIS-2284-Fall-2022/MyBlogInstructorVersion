@@ -1,0 +1,21 @@
+﻿@page "/counterwithparameter"
+
+<PageTitle>Counter Modified by Rob</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @CurrentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    [Parameter]
+    public int IncrementAmount { get; set; } = 1; 
+    [Parameter]
+    public int CurrentCount { get; set; }
+
+    private void IncrementCount()
+    {
+        CurrentCount+=IncrementAmount;
+    }
+}
