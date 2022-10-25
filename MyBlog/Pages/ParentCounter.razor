@@ -2,12 +2,17 @@
 <h3>ParentCounter</h3>
 
 <CounterWithParam IncrementAmount="@incrementamount" CurrentCount="@currentcount"> @*<--one-way databiding = passing by value*@
-
-
 </CounterWithParam>
+
+<CounterWithParamAndEvent IncrementAmount="@incrementamount" CurrentCount="@currentcount" CurrentCountChanged="CurrentCountChanged"></CounterWithParamAndEvent>
 
 The current count is @currentcount
 @code {
     int incrementamount = 10;
     int currentcount = 0;
+
+    private void CurrentCountChanged(int currentCount)
+    {
+        this.currentcount = currentCount;
+    }
 }
