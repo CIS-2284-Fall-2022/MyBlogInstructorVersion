@@ -18,18 +18,16 @@
     }
 
 </ul>
-@code{
+@code {
     protected async Task AddSomePosts()
     {
-        for (int i=1; i<10; i++)
-        {
-            await repo.SaveBlogPostAsync(new BlogPost()
-                {
-                    PublishDate = DateTime.Now,
-                    Title = $"Blog post {i}",
-                    Text = "Text"
-                });
-        }
+        var newPost = await repo.SaveBlogPostAsync(new BlogPost()
+            {
+                PublishDate = DateTime.Now,
+                Title = $"Blog post {DateTime.Now.ToString("D")} {DateTime.Now.ToString("T")}",
+                Text = "Text"
+            });
+        posts.Add(newPost);
     }
 
     protected List<BlogPost> posts = new List<BlogPost>();
@@ -39,8 +37,6 @@
         posts = await repo.GetBlogPostsAsync(10, 0);
         await base.OnInitializedAsync();
     }
-
-
 }
 
 
