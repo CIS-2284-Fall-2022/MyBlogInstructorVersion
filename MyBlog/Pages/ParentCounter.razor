@@ -4,7 +4,7 @@
 <CounterWithParam IncrementAmount="@incrementamount" CurrentCount="@currentcount"> @*<--one-way databiding = passing by value*@
 </CounterWithParam>
 
-<CounterWithParamAndEvent IncrementAmount="@incrementamount" CurrentCount="@currentcount" CurrentCountChanged="CurrentCountChanged"></CounterWithParamAndEvent>
+<CounterWithParamAndEvent IncrementAmount="@incrementamount" @bind-CurrentCount="currentcount" @bind-CurrentCount:event="CurrentCountChanged"></CounterWithParamAndEvent>
 
 The current count is @currentcount
 @code {
