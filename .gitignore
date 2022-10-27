@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Don't include database
+MyBlog.db
+MyBlog.db-shm
+MyBlog.db-wal
