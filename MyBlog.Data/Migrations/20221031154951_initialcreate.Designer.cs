@@ -11,8 +11,8 @@ using MyBlog.Data;
 namespace MyBlog.Data.Migrations
 {
     [DbContext(typeof(MyBlogDbContext))]
-    [Migration("20221026234623_ChangeBlogPostItemsToNULL")]
-    partial class ChangeBlogPostItemsToNULL
+    [Migration("20221031154951_initialcreate")]
+    partial class initialcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,9 +47,11 @@ namespace MyBlog.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Text")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

@@ -5,79 +5,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyBlog.Data.Migrations
 {
-    public partial class ChangeBlogPostItemsToNULL : Migration
+    public partial class RemoveNullFieldsInBlogPost : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_BlogPosts_Categories_CategoryId",
                 table: "BlogPosts");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Title",
-                table: "BlogPosts",
-                type: "TEXT",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "TEXT");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Text",
-                table: "BlogPosts",
-                type: "TEXT",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "TEXT");
-
-            migrationBuilder.AlterColumn<DateTime>(
-                name: "PublishDate",
-                table: "BlogPosts",
-                type: "TEXT",
-                nullable: true,
-                oldClrType: typeof(DateTime),
-                oldType: "TEXT");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "CategoryId",
-                table: "BlogPosts",
-                type: "INTEGER",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "INTEGER");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_BlogPosts_Categories_CategoryId",
-                table: "BlogPosts",
-                column: "CategoryId",
-                principalTable: "Categories",
-                principalColumn: "Id");
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_BlogPosts_Categories_CategoryId",
-                table: "BlogPosts");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Title",
-                table: "BlogPosts",
-                type: "TEXT",
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "TEXT",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Text",
-                table: "BlogPosts",
-                type: "TEXT",
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "TEXT",
-                oldNullable: true);
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "PublishDate",
@@ -106,6 +40,36 @@ namespace MyBlog.Data.Migrations
                 principalTable: "Categories",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_BlogPosts_Categories_CategoryId",
+                table: "BlogPosts");
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "PublishDate",
+                table: "BlogPosts",
+                type: "TEXT",
+                nullable: true,
+                oldClrType: typeof(DateTime),
+                oldType: "TEXT");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "CategoryId",
+                table: "BlogPosts",
+                type: "INTEGER",
+                nullable: true,
+                oldClrType: typeof(int),
+                oldType: "INTEGER");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_BlogPosts_Categories_CategoryId",
+                table: "BlogPosts",
+                column: "CategoryId",
+                principalTable: "Categories",
+                principalColumn: "Id");
         }
     }
 }

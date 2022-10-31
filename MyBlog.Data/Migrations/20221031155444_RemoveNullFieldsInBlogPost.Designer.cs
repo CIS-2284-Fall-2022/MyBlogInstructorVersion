@@ -11,8 +11,8 @@ using MyBlog.Data;
 namespace MyBlog.Data.Migrations
 {
     [DbContext(typeof(MyBlogDbContext))]
-    [Migration("20220926235513_InitialDatabaseMigration")]
-    partial class InitialDatabaseMigration
+    [Migration("20221031155444_RemoveNullFieldsInBlogPost")]
+    partial class RemoveNullFieldsInBlogPost
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

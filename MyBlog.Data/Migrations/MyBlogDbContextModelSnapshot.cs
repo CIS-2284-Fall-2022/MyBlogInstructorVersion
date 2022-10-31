@@ -38,16 +38,18 @@ namespace MyBlog.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("PublishDate")
+                    b.Property<DateTime>("PublishDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Text")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -106,7 +108,9 @@ namespace MyBlog.Data.Migrations
                 {
                     b.HasOne("MyBlog.Data.Models.Category", "Category")
                         .WithMany("BlogPosts")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });
