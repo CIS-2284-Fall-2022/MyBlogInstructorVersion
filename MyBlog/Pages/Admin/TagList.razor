@@ -4,14 +4,15 @@
 @using MyBlog.Data.Models
 @inject MyBlog.Data.Interfaces.ITagRepo tagRepo
 <h3>Tags</h3>
+
 <EditForm OnValidSubmit="Save" Model="Item">
     <DataAnnotationsValidator />
-    <CustomCssClassProvider
-      ProviderType="BootstrapFieldCssClassProvider" />
+    <CustomCssClassProvider ProviderType="BootstrapFieldCssClassProvider" />
     <InputText @bind-Value="@Item.Name" />
     <ValidationMessage For="@(()=>Item.Name)" />
-    <button class="btn btn-success"      type="submit">Save</button>
+    <button class="btn btn-success" type="submit">Save</button>
 </EditForm>
+
 <ItemList Items="Items" DeleteEvent="@Delete" SelectEvent="@Select" ItemType="Tag">
     <ItemTemplate>
         @{
