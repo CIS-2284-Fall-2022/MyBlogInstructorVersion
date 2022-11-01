@@ -1,0 +1,67 @@
+﻿@page "/admin/categories"
+@using MyBlog.Components
+@using MyBlog.Components.MyBlogServerSide.Components
+@using MyBlog.Data.Interfaces
+@using MyBlog.Data.Models
+@inject ICategoryRepo categoryRepo
+<h3>Categories</h3>
+<EditForm OnValidSubmit="Save" Model="Item">
+    <DataAnnotationsValidator/>
+    <CustomCssClassProvider ProviderType="BootstrapFieldCssClassProvider" />
+    <InputText @bind-Value="@Item.Name"/>
+    <ValidationMessage For="@(()=>Item.Name)"/>
+    <button class="btn btn-success" type="submit">Save</button>
+</EditForm>
+<ItemList Items="Items" DeleteEvent="@Delete" SelectEvent="@Select" ItemType="Category">
+    <ItemTemplate>
+        @{
+            var item = context as Category;
+            if (item != null)
+            {
+                @item.Name;
+            }
+        }
+    </ItemTemplate>
+</ItemList>
+
+@code {
+    private List<Category> Items { get; set; } = new List<Category>();
+    public Category Item { get; set; } = new Category();
+
+    protected async override Task OnInitializedAsync()
+    {
+        Items = await categoryRepo.GetCategoriesAsync();
+        await base.OnInitializedAsync();
+    }
+    private async Task Delete(Category category)
+    {
+        try
+        {
+            await categoryRepo.DeleteCategoryAsync(category);
+            Items.Remove(category);
+        }
+        catch { }
+    }
+    private async Task Save()
+    {
+        try
+        {
+            if (Item.Id == 0)
+            {
+                Items.Add(Item);
+            }
+            await categoryRepo.SaveCategoryAsync(Item);
+            Item = new Category();
+        }
+        catch { }
+    }
+    private Task Select(Category category)
+    {
+        try
+        {
+            Item = category;
+        }
+        catch { }
+        return Task.CompletedTask;
+    }
+}
