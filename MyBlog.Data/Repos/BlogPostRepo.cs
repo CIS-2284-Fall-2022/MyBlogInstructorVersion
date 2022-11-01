@@ -44,10 +44,12 @@ namespace MyBlog.Data.Repos
             using var context = factory.CreateDbContext();
             if (post.Id == 0) //Add new item
             {
+                post.Category = await context.Categories.FirstOrDefaultAsync(c => c.Id == post.Category.Id);
                 context.BlogPosts.Add(post);
             }
             else //Update old item
             {
+                post.Category = await context.Categories.FirstOrDefaultAsync(c => c.Id == post.Category.Id);
                 context.Entry(post).State = EntityState.Modified;
             }
             await context.SaveChangesAsync();
