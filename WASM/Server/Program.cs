@@ -1,16 +1,22 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
-using MyBlog.Data;
 using MyBlog.Data.Interfaces;
 using MyBlog.Data.Repos;
+using MyBlog.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
 
 // Add services to the container.
 builder.Services.AddDbContextFactory<MyBlogDbContext>(opt => opt.UseSqlite($"Data Source=../../MyBlog.db"));
 builder.Services.AddScoped<IBlogPostRepo, BlogPostRepo>();
 builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
 builder.Services.AddScoped<ITagRepo, TagRepo>();
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
