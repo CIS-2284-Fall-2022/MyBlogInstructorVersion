@@ -42,15 +42,35 @@ namespace MyBlog.Data.Repos
         public async Task<BlogPost> SaveBlogPostAsync(BlogPost post)
         {
             using var context = factory.CreateDbContext();
+
+            //Fix references to tags and categories
+            List<Tag> tags = new List<Tag>();
+            foreach (var tag in post.Tags)
+            {
+                context.Tags.Attach(tag);              
+            }
+            if (post.Category != null)
+            {
+                context.Categories.Attach(post.Category);
+            }
+
+            //Add or update
             if (post.Id == 0) //Add new item
             {
-                post.Category = await context.Categories.FirstOrDefaultAsync(c => c.Id == post.Category.Id);
                 context.BlogPosts.Add(post);
             }
             else //Update old item
             {
-                post.Category = await context.Categories.FirstOrDefaultAsync(c => c.Id == post.Category.Id);
-                context.Entry(post).State = EntityState.Modified;
+                var currentpost = await context.BlogPosts.Include(p => p.Category).Include(p => p.Tags).FirstOrDefaultAsync(p => p.Id == post.Id);
+                if (currentpost != null)
+                {
+                    currentpost.PublishDate = post.PublishDate;
+                    currentpost.Title = post.Title;
+                    currentpost.Text = post.Text;
+                    var ids = post.Tags.Select(t => t.Id);
+                    currentpost.Tags = context.Tags.Where(t => ids.Contains(t.Id)).ToList();
+                    currentpost.Category = await context.Categories.FirstOrDefaultAsync(c => c.Id == post.Category.Id);
+                }
             }
             await context.SaveChangesAsync();
             return post;
