@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using MyBlog.Data;
+using MyBlog.Data.Interfaces;
+using MyBlog.Data.Repos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,10 @@ builder.Services.AddRazorPages();
 
 //Add our database context
 builder.Services.AddDbContextFactory<MyBlogDbContext>(opt => opt.UseSqlite($"DataSource = ../../MyBlog.db"));
+
+builder.Services.AddScoped<IBlogPostRepo, BlogPostRepo>();
+builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
+builder.Services.AddScoped<ITagRepo, TagRepo>();
 
 var app = builder.Build();
 
