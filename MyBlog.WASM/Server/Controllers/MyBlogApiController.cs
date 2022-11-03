@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
 using MyBlog.Data.Interfaces;
+using MyBlog.Data.Models;
 
 namespace MyBlog.WASM.Server.Controllers
 {
@@ -21,9 +22,9 @@ namespace MyBlog.WASM.Server.Controllers
 
         [HttpGet]
         [Route("BlogPosts")]
-        public string GetBlogPosts()
+        public async Task<List<BlogPost>> GetBlogPostsAsync()
         {
-            return "Hello Api!";
+            return await _blogPostRepo.GetBlogPostsAsync(10, 0);
         }
     }
 }
