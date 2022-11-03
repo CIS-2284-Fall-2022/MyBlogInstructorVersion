@@ -88,5 +88,35 @@ namespace MyBlog.WASM.Server.Controllers
         {
             await _categoryRepo.DeleteCategoryAsync(item);
         }
+
+        [HttpGet]
+        [Route("Tags")]
+        public async Task<List<Tag>> GetTagsAsync()
+        {
+            return await _tagRepo.GetTagsAsync();
+        }
+
+        [HttpGet]
+        [Route("Tags/{id}")]
+        public async Task<Tag> GetTagAsync(int id)
+        {
+            return await _tagRepo.GetTagAsync(id);
+        }
+
+        [Authorize]
+        [HttpPut]
+        [Route("Tags")]
+        public async Task<Tag> SaveTagAsync([FromBody] Tag item)
+        {
+            return await _tagRepo.SaveTagAsync(item);
+        }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("Tags")]
+        public async Task DeleteTagAsync([FromBody] Tag item)
+        {
+            await _tagRepo.DeleteTagAsync(item);
+        }
     }
 }
