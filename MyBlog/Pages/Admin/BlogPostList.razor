@@ -1,0 +1,33 @@
+﻿@page "/admin/blogposts"
+@using MyBlog.Data.Interfaces
+@using MyBlog.Data.Models
+
+@inject IBlogPostRepo blogPostRepo
+
+<a href="/admin/blogposts/new">New blog post</a>
+
+<ul>
+    <Virtualize ItemsProvider="LoadPosts" Context="p">
+        <li>@p.PublishDate
+         <a href="/admin/blogposts/@p.Id">@p.Title</a>
+        </li>
+    </Virtualize>
+</ul>
+
+@code {
+
+    public int TotalBlogposts { get; set; }
+
+    private async ValueTask<ItemsProviderResult<BlogPost>> LoadPosts(ItemsProviderRequest request)
+    {
+        if (TotalBlogposts == 0)
+        {
+            TotalBlogposts = await
+              blogPostRepo.GetBlogPostCountAsync();
+        }
+
+        var numblogposts = Math.Min(request.Count, TotalBlogposts - request.StartIndex);
+        var posts = await blogPostRepo.GetBlogPostsAsync(numblogposts, request.StartIndex);
+        return new ItemsProviderResult<BlogPost>(posts, TotalBlogposts);
+    }
+}

@@ -1,20 +1,23 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-
-namespace MyBlog.Components
+﻿namespace MyBlog.Components
 {
-    public class BootstrapFieldCssClassProvider : FieldCssClassProvider
+    using Microsoft.AspNetCore.Components.Forms;
+    using System.Linq;
+    namespace MyBlogServerSide.Components
     {
-        public override string GetFieldCssClass(EditContext editContext, in FieldIdentifier fieldIdentifier)
+        public class BootstrapFieldCssClassProvider : FieldCssClassProvider
         {
-            var isValid = !editContext.GetValidationMessages(fieldIdentifier).Any();
-            var isModified = editContext.IsModified(fieldIdentifier);
-            return (isModified, isValid) switch
+            public override string GetFieldCssClass(EditContext editContext, in FieldIdentifier fieldIdentifier)
             {
-                (true, true) => "form-control modified is -valid",
-                (true, false) => "form-control modified is -invalid",
-                (false, true) => "form-control",
-                (false, false) => "form-control"
-            };
+                var isValid = !editContext.GetValidationMessages(fieldIdentifier).Any();
+                var isModified = editContext.IsModified(fieldIdentifier);
+                return (isModified, isValid) switch
+                {
+                    (true, true) => "form-control modified is -valid",
+                    (true, false) => "form-control modified is -invalid",
+                    (false, true) => "form-control",
+                    (false, false) => "form-control"
+                };
+            }
         }
     }
 }

@@ -11,9 +11,9 @@
 <br />
 
 <ul>
-   <Virtualize ItemsProvider="LoadPosts" Context="p">
+    <Virtualize ItemsProvider="LoadPosts" Context="p">
         <li><a href="/Post/@p.Id">@p.Title</a></li>
-   </Virtualize>
+    </Virtualize>
 </ul>
 @code{
     protected async Task AddSomePosts()
@@ -29,21 +29,27 @@
         }
     }
 
-    //protected List<BlogPost> posts = new List<BlogPost>();
+    protected List<BlogPost> posts = new List<BlogPost>();
 
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await repo.GetBlogPostsAsync(10, 0);
+        await base.OnInitializedAsync();
+    }
     public int totalBlogposts { get; set; }
 
     private async ValueTask<ItemsProviderResult<BlogPost>> LoadPosts(ItemsProviderRequest request)
     {
-        if(totalBlogposts == 0)
+        if (totalBlogposts == 0)
         {
             totalBlogposts = await repo.GetBlogPostCountAsync();
         }
-        var numblogposts = Math.Min(request.Count, totalBlogposts - request.StartIndex);
-        var posts = await repo.GetBlogPostsAsync(numblogposts, request.StartIndex);
-        return new ItemsProviderResult<BlogPost>(posts, totalBlogposts);
+
+        var numblogposts = Math.Min(request.Count,
+          totalBlogposts - request.StartIndex);
+        var employees = await repo.GetBlogPostsAsync(numblogposts, request.StartIndex);
+        return new ItemsProviderResult<BlogPost>(employees, totalBlogposts);
     }
-    
 
 }
 
